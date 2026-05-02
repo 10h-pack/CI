@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>混沌分裂者 · 德尔塔总部 | 超维度情报枢纽</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Courier New', 'Fira Code', 'IBM Plex Mono', monospace;
+            padding: 20px;
+            position: relative;
+            background: #1a0303;
+            animation: bloodPulse 14s infinite alternate;
+            overflow-x: hidden;
+        }
+
+        @keyframes bloodPulse {
+            0% { background: #1f0505; }
+            50% { background: #3c0c0c; }
+            100% { background: #280505; }
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(180, 30, 30, 0.25), rgba(0, 0, 0, 0.7)),
+                        repeating-linear-gradient(45deg, rgba(255, 40, 40, 0.05) 0px, rgba(255, 40, 40, 0.05) 2px, transparent 2px, transparent 8px);
+            pointer-events: none;
+            z-index: 1;
+            animation: redGlow 8s infinite alternate;
+        }
+
+        @keyframes redGlow {
+            0% { opacity: 0.4; filter: hue-rotate(0deg);}
+            100% { opacity: 0.8; filter: hue-rotate(8deg);}
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(200, 30, 30, 0.1) 0px, rgba(200, 30, 30, 0.1) 1px, transparent 1px, transparent 3px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .delta-terminal {
+            max-width: 1600px;
+            width: 100%;
+            background: #0a0508cc;
+            backdrop-filter: blur(5px);
+            border: 1.5px solid #b32d2d;
+            border-radius: 16px;
+            box-shadow: 0 0 35px rgba(200, 30, 30, 0.4), inset 0 0 20px rgba(0,0,0,0.6);
+            padding: 1.6rem;
+            position: relative;
+            z-index: 10;
+            margin: 0 auto;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: #120303aa;
+            padding: 8px 15px;
+            border-radius: 30px;
+            margin-bottom: 18px;
+            border: 1px solid #a53333;
+            font-size: 0.8rem;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+        .status-item { color: #9effcf; text-shadow: 0 0 3px #1e6b45; }
+        .status-item-red { color: #ff8a8a; text-shadow: 0 0 2px #aa3a3a; }
+
+        .engineer-bar {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #9effcf, #6effb0, #ffb347, #ff6e6e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: rainbowText 3s infinite alternate;
+        }
+        @keyframes rainbowText {
+            0% { filter: hue-rotate(0deg); text-shadow: 0 0 3px #287f55; }
+            100% { filter: hue-rotate(10deg); text-shadow: 0 0 8px #ffa0a0; }
+        }
+
+        .chaos-leader-avatar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .avatar-img {
+            width: 50px; height: 50px;
+            background: radial-gradient(circle, #1e3a2a, #120202);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            border: 1.5px solid #6effb0;
+            box-shadow: 0 0 10px #21b36b;
+        }
+
+        .glitch-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #d4ffcf;
+            text-shadow: 0 0 8px #1f9e5a;
+            letter-spacing: 3px;
+            text-align: center;
+            animation: greenFlicker 2.2s infinite;
+        }
+        @keyframes greenFlicker {
+            0%,100% { opacity: 1; text-shadow: 0 0 3px #2aff8c; }
+            50% { opacity: 0.9; text-shadow: 1px 0px 0px #6effb0; }
+        }
+
+        /* 按钮网格 - 疯狂扩充 */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+            gap: 7px;
+            margin: 18px 0;
+        }
+        .chaos-btn {
+            background: #1f0a0add;
+            border: 1px solid #ad3a3a;
+            color: #bdffcf;
+            padding: 7px 5px;
+            font-size: 0.68rem;
+            cursor: pointer;
+            transition: 0.1s;
+            font-weight: bold;
+            font-family: monospace;
+            white-space: nowrap;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+        }
+        .chaos-btn:hover { background: #3d7a5a; color: black; border-color: #baffaa; transform: scale(0.97);}
+
+        .announcement-bar {
+            background: #170606cc;
+            border: 1px solid #ff5e5e;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 0.7rem;
+        }
+        .announcement-highlight { color: #ffbc6e; font-weight: bold; }
+
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .info-panel, .comm-panel, .market-panel {
+            background: #050206cc;
+            border: 1px solid #8c3535;
+            border-radius: 8px;
+            padding: 0.8rem;
+        }
+        .info-panel { flex: 1.2; min-width: 250px; }
+        .comm-panel { flex: 1; min-width: 260px; }
+        .market-panel { flex: 0.8; min-width: 220px; }
+
+        .section-title {
+            color: #aaffc4;
+            border-left: 3px solid #ff5e5e;
+            padding-left: 8px;
+            margin-bottom: 10px;
+            font-size: 0.75rem;
+        }
+        .member-list, .wanted-list { max-height: 200px; overflow-y: auto; }
+        .member-card {
+            background: #120707;
+            padding: 5px 8px;
+            margin-bottom: 5px;
+            border-left: 2px solid #bf4a4a;
+            font-size: 0.68rem;
+        }
+        .green-text { color: #9effcf; }
+        .red-text { color: #ff9a8a; }
+
+        .chat-log {
+            background: #030005;
+            height: 180px;
+            overflow-y: auto;
+            padding: 8px;
+            border: 1px solid #963333;
+            font-size: 0.62rem;
+        }
+        .message { margin-bottom: 5px; border-bottom: 1px solid #642020; }
+        .msg-name-green { color: #6effb0; font-weight: bold; }
+        .msg-name-red { color: #ff8a6e; font-weight: bold; }
+        .msg-text { color: #cfcfcf; margin-left: 5px; }
+
+        .comm-input-area { display: flex; gap: 5px; margin-top: 8px; }
+        #commInput { flex:2; background:#130101; border:1px solid #b13a3a; padding: 5px; color: #9effc4; font-size:0.7rem; }
+        #sendComm { background:#2a1010; border:1px solid #cc5555; color:#bdffcf; padding:0 12px; cursor:pointer; }
+
+        .modal-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.98); z-index:1000;
+            display: flex; align-items: center; justify-content: center;
+            visibility: hidden; opacity: 0;
+        }
+        .modal-overlay.active { visibility: visible; opacity: 1; }
+        .modal-content {
+            background: #0f0606;
+            border: 2px solid #a33;
+            max-width: 600px;
+            width: 90%;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding: 1.3rem;
+            color: #ceffdf;
+            font-size: 0.8rem;
+        }
+        .modal-content h3 { color: #ffcf9e; border-left: 3px solid #ff7e4a; padding-left: 10px; margin-bottom: 12px; }
+        .spinner {
+            width: 35px; height: 35px;
+            border: 3px solid #5e2a2a;
+            border-top: 3px solid #6effb0;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .group-row { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
+        .qq-card { background: #120707; border: 1px solid #aa4a4a; padding: 5px 10px; text-align: center; font-size: 0.7rem; }
+        .copy-btn { background: none; border: 1px solid #e06a6a; color: #b5ffcf; padding: 2px 6px; cursor: pointer; font-size: 0.6rem; }
+        .footer-tip { text-align: center; font-size: 0.5rem; color: #a06e6e; margin-top: 15px; }
+
+        .splash-screen {
+            position: fixed; top:0; left:0; width:100%; height:100%; background:#020101; z-index:2000;
+            display:flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+        }
+        .loading-bar { width: 200px; height: 2px; background: #391010; }
+        .loading-progress { width: 0%; height: 100%; background: #8effaa; }
+    </style>
+</head>
+<body>
+<div id="splashOverlay" class="splash-screen">
+    <div style="color:#aaffc4;">◬ 混沌分裂者 · 超维度情报枢纽 ◬</div>
+    <div class="loading-bar"><div id="loadProgress" class="loading-progress"></div></div>
+    <div id="loadStep" style="color:#9fcfb0;">加载31个情报节点...</div>
+</div>
+
+<div class="delta-terminal" id="mainTerminal" style="opacity:0;">
+    <div class="status-bar">
+        <span class="status-item" id="realTime">⏱ --:--:--</span>
+        <span class="status-item" id="weather">🌡 获取中</span>
+        <span class="status-item-red" id="serverStat">🖥 服务器: 临界</span>
+        <span class="status-item-red">🔴 混沌警戒级别: 橙</span>
+    </div>
+
+    <div class="announcement-bar">
+        <span>📢 <span class="announcement-highlight">混沌通告</span></span>
+        <span>最大合作方: <span class="announcement-highlight">SITE-911</span> | 贡献最大: <span class="announcement-highlight">shun</span></span>
+        <span>| 情报节点数: 31 | 混沌协议 Δ-7</span>
+    </div>
+
+    <div class="engineer-bar">⚡ 德尔塔工程师QQ <span id="engineerQQ">3583269942</span> <button class="copy-btn" id="copyEngQQ">复制</button><span id="toastEngineer"></span></div>
+
+    <div class="chaos-leader-avatar">
+        <div class="avatar-img">🔱</div><div class="avatar-img">🕰️</div><div class="avatar-img">🐉</div><div class="avatar-img">📁</div><div class="avatar-img">⚙️</div><div class="avatar-img">🌑</div>
+    </div>
+
+    <div class="glitch-title">混沌分裂者·德尔塔总部 | 暗网深层终端</div>
+
+    <!-- 超多按钮：31个情报入口 -->
+    <div class="action-grid">
+        <button class="chaos-btn" id="scpBtn">📄 SCP档案</button>
+        <button class="chaos-btn" id="eventBtn">⚠️ 突发事件</button>
+        <button class="chaos-btn" id="adminBtn">⚙️ 管理核心</button>
+        <button class="chaos-btn" id="partnerBtn">🤝 合作势力</button>
+        <button class="chaos-btn" id="rivalBtn">⚔️ 敌对名单</button>
+        <button class="chaos-btn" id="weaponBtn">🔫 武器库</button>
+        <button class="chaos-btn" id="warReportBtn">📜 5K战报</button>
+        <button class="chaos-btn" id="wantedBtn">💰 基金会悬赏</button>
+        <button class="chaos-btn" id="marketBriefBtn">💹 暗网交易</button>
+        <button class="chaos-btn" id="foundationRespBtn">📢 基金会回应</button>
+        <button class="chaos-btn" id="prophecyBtn">🔮 熵之预言</button>
+        <button class="chaos-btn" id="defectorBtn">⚠️ 叛逃者</button>
+        <button class="chaos-btn" id="scpItemsBtn">📦 异常细目</button>
+        <button class="chaos-btn" id="goiBtn">🌐 相关组织</button>
+        <button class="chaos-btn" id="mtfBtn">🛡️ MTF威胁</button>
+        <button class="chaos-btn" id="apollyonBtn">💀 Apollyon</button>
+        <button class="chaos-btn" id="scpTaleBtn">📖 分裂者传说</button>
+        <button class="chaos-btn" id="arkhamBtn">🌙 阿卡姆协议</button>
+        <!-- 新增14个深度SCP内容 -->
+        <button class="chaos-btn" id="keterBtn">⚡ Keter威胁</button>
+        <button class="chaos-btn" id="thaumielBtn">🛡️ Thaumiel资产</button>
+        <button class="chaos-btn" id="siteLocBtn">🏚️ 基金会站点</button>
+        <button class="chaos-btn" id="personnelBtn">👤 关键人物</button>
+        <button class="chaos-btn" id="ritualBtn">🕯️ 混沌仪式</button>
+        <button class="chaos-btn" id="infrastructureBtn">🏭 混沌基建</button>
+        <button class="chaos-btn" id="frontBtn">🌲 前线战报</button>
+        <button class="chaos-btn" id="artifactBtn">🏺 古代异常</button>
+        <button class="chaos-btn" id="cognitohazardBtn">🧠 认知危害</button>
+        <button class="chaos-btn" id="realityBendingBtn">🌀 现实扭曲</button>
+        <button class="chaos-btn" id="pataphysicsBtn">📚 超形上学</button>
+        <button class="chaos-btn" id="ethicsBtn">⚖️ 伦理委员会</button>
+        <button class="chaos-btn" id="serpentsHandBtn">🐍 蛇之手档案</button>
+        <button class="chaos-btn" id="gocWeaponBtn">💣 GOC武器清单</button>
+    </div>
+
+    <div class="dashboard">
+        <div class="info-panel">
+            <div class="section-title">👥 混沌核心 · 德尔塔单元</div>
+            <div class="member-list" id="memberList"></div>
+            <div class="section-title" style="margin-top:8px;">💰 基金会悬赏令</div>
+            <div class="wanted-list" id="wantedList"></div>
+        </div>
+        <div class="comm-panel">
+            <div class="section-title">📡 混沌内部信道</div>
+            <div class="chat-log" id="chatLog"><div class="message"><span class="msg-name-green">🔴 CI_SYS</span><span class="msg-text">31个情报节点已上线。欢迎，分裂者。</span></div></div>
+            <div class="comm-input-area"><input id="commInput" placeholder=">_ 混沌内部通讯"><button id="sendComm">发送</button></div>
+        </div>
+        <div class="market-panel">
+            <div class="section-title">💹 暗网交易简报</div>
+            <div id="marketBrief" style="font-size:0.6rem; color:#b0ffcf;">加载中...</div>
+        </div>
+    </div>
+
+    <div class="group-row">
+        <div class="qq-card">总部QQ: 925169224 <button class="copy-btn" data-clip="925169224" data-toast="toastHq">复制</button><div id="toastHq"></div></div>
+        <div class="qq-card">分部QQ: 1034088813 <button class="copy-btn" data-clip="1034088813" data-toast="toastBranch">复制</button><div id="toastBranch"></div></div>
+    </div>
+    <div class="footer-tip">[ 部分人员未得到德尔塔工程师授权公开 | 31个情报节点 | SCP基金会宇宙深度覆盖 ]</div>
+</div>
+
+<div id="modal" class="modal-overlay"><div class="modal-content"><h3 id="modalTitle">档案</h3><div id="modalBody"></div><button id="closeModal" style="margin-top:15px; background:#2a1010; border:1px solid #cc6666; color:#ffcfcf; padding:4px 12px; cursor:pointer;">关闭</button></div></div>
+
+<script>
+    // 启动动画
+    let prog=0;
+    const splash=document.getElementById('splashOverlay');
+    const terminal=document.getElementById('mainTerminal');
+    const interval=setInterval(()=>{ prog+=Math.random()*15+5; if(prog>=100){ clearInterval(interval); splash.style.opacity="0"; setTimeout(()=>{ splash.style.display="none"; terminal.style.opacity="1"; },400); } document.getElementById('loadProgress').style.width=prog+"%"; },50);
+
+    // 时间/天气/服务器
+    function updateTime(){ document.getElementById('realTime').innerHTML=`⏱ ${new Date().toLocaleTimeString()}`; }
+    setInterval(updateTime,1000); updateTime();
+    setInterval(()=>{ let w=["血雾 31°C","赤红风暴 43°C","腐雨 26°C","熵雷暴 39°C"][Math.floor(Math.random()*4)]; document.getElementById('weather').innerHTML=`🌡 ${w}`; },30000);
+    setInterval(()=>{ let s=Math.random()>0.6?"🔴 过载":"🟢 临界"; document.getElementById('serverStat').innerHTML=`🖥 服务器: ${s}`; },12000);
+
+    // 混沌成员
+    const members=[{name:"赫尔墨斯之杖使·伊尼亚",rank:"熵变指挥官"},{name:"熵之钟祭司·维斯科",rank:"大司祭"},{name:"暗猎者·九尾",rank:"渗透特工"},{name:"文件幽灵·莫比乌斯",rank:"情报中枢"},{name:"裂变铁锤·卡恩",rank:"战术处决者"},{name:"熵能先知·艾尔",rank:"预言者"}];
+    const memberDiv=document.getElementById('memberList');
+    members.forEach(m=>{ let d=document.createElement('div'); d.className='member-card'; d.innerHTML=`<strong class="green-text">${m.name}</strong><br><span class="red-text">${m.rank}</span>`; memberDiv.appendChild(d); });
+
+    const wantedData=["🔴 伊尼亚 - 800万","🔴 维斯科 - 650万","🔴 九尾 - 500万","🔴 莫比乌斯 - 420万","🔴 卡恩 - 380万","🔴 艾尔 - 300万"];
+    const wantedDiv=document.getElementById('wantedList');
+    wantedData.forEach(w=>{ let d=document.createElement('div'); d.className='member-card'; d.innerHTML=`<span class="red-text">${w}</span>`; wantedDiv.appendChild(d); });
+
+    const marketUpdates=["📦 赫尔墨斯残片 3.2BTC","🔫 熵能手雷 0.8BTC","📁 基金会档案 1.5BTC","💊 认知污染模因 2.1BTC","⚙️ 裂变核心 5.0BTC","🕯️ SCP-███ 7.4BTC"];
+    function updateMarket(){ document.getElementById('marketBrief').innerHTML=marketUpdates[Math.floor(Math.random()*marketUpdates.length)]; }
+    updateMarket(); setInterval(updateMarket,15000);
+
+    const chatLog=document.getElementById('chatLog'), commInp=document.getElementById('commInput');
+    function addMsg(sender,text,isGreen=true){ let d=document.createElement('div'); d.className='message'; d.innerHTML=`<span class="${isGreen?'msg-name-green':'msg-name-red'}">${sender}</span><span class="msg-text">${text}</span>`; chatLog.appendChild(d); chatLog.scrollTop=chatLog.scrollHeight; }
+    document.getElementById('sendComm').onclick=()=>{ let v=commInp.value.trim(); if(v){ addMsg("裂变特遣员",v,true); commInp.value=""; } };
+    addMsg("CI_SYS","31个情报节点全量加载。",true);
+
+    // 模态框通用
+    const modalDiv=document.getElementById('modal'), modalTitle=document.getElementById('modalTitle'), modalBody=document.getElementById('modalBody');
+    function showModal(title, contentPromise){ modalTitle.innerText=title; modalBody.innerHTML=`<div class="spinner"></div>`; modalDiv.classList.add('active'); contentPromise.then(html=>{ modalBody.innerHTML=html; }); }
+    document.getElementById('closeModal').onclick=()=>modalDiv.classList.remove('active');
+    modalDiv.onclick=(e)=>{ if(e.target===modalDiv) modalDiv.classList.remove('active'); };
+
+    // ==================== 海量内容库 ====================
+    const scpList=[{name:"赫尔墨斯之杖",desc:"改变物质性质"},{name:"熵之钟",desc:"现实崩溃"},{name:"认知污染模因",desc:"反间谍"},{name:"裂变核心·Δ型",desc:"崩解力场"}];
+    const eventPool=["基金会MTF突袭","熵之钟低鸣","GOC拦截武器","南美站点交火","暗网情报泄露"];
+    const adminData=[{name:"不知道何意味",role:"暗码分析师",authorized:true},{name:"GOC谈判专家",role:"外联",authorized:true},{name:"shun",role:"战术督导",authorized:true},{name:"████",role:"未知",authorized:false}];
+    const partners=[{name:"SITE-911",desc:"最大合作方"},{name:"SITE-03",desc:"超形上学泄密"},{name:"CINS",desc:"情报中转"},{name:"破碎之神教会",desc:"熵能共享"}];
+    const rivals=[{name:"SCP基金会",desc:"死敌"},{name:"GOC",desc:"拦截交易"},{name:"蛇之手激进派",desc:"交火"},{name:"MC&D",desc:"黑市竞争者"}];
+    const weapons=[{name:"熵能榴弹",desc:"降解"},{name:"赫尔墨斯注射器",desc:"液化"},{name:"裂变手雷",desc:"崩解"},{name:"恐惧回响",desc:"模因"}];
+    const warReports=["5K·元年：刚果基地","5K·三年：西非硅化战役","5K·七年：O5渗透","5K·十二年：德尔塔建成"];
+    const foundationResponses=["Keter级组织威胁","O5授权奇术打击","MTF清除7名渗透者"];
+    const prophecies=["第七次鸣响撕裂现实","赫尔墨斯重铸秩序","O5三人倒戈","德尔塔成新轴心"];
+    const defectors=["前研究员███ - 处决","特工'鼹鼠' - 清除","情报贩子'回声' - 叛逃"];
+    const scpItemsDetail=[{name:"SCP-500",desc:"万能药，窃取失败"},{name:"SCP-914",desc:"精密加工仪"},{name:"SCP-049",desc:"疫医风险高"},{name:"SCP-096",desc:"引入混乱"},{name:"SCP-173",desc:"雕像"},{name:"SCP-682",desc:"无法控制"}];
+    const goiList=[{name:"基金会",rel:"死敌"},{name:"GOC",rel:"敌对"},{name:"蛇之手",rel:"部分中立"},{name:"破碎之神",rel:"合作"},{name:"MC&D",rel:"竞争"},{name:"地平线倡议",rel:"极少接触"}];
+    const mtfThreats=[{name:"MTF-Alpha-1",desc:"O5直属暗杀"},{name:"MTF-Epsilon-11",desc:"突袭"},{name:"MTF-Tau-5",desc:"超维度抗性"},{name:"MTF-Omega-12",desc:"专对混沌"}];
+    const apollyonThreats=[{name:"SCP-001",desc:"末日场景"},{name:"SCP-2700",desc:"自毁装置"},{name:"SCP-4000",desc:"禁忌之地"}];
+    const scpTales=[{title:"叛变之夜",desc:"1924年叛逃"},{title:"熵之钟第一次敲击",desc:"刚果涟漪"},{title:"赫尔墨斯代价",desc:"非人化"},{title:"德尔塔之下",desc:"封印异常"}];
+    const arkhamProtocol=[{name:"阿卡姆稳定锚",desc:"逆向工程"},{name:"阿尔法现实炸弹",desc:"同归于尽"},{name:"奇术干扰场",desc:"防御"}];
+
+    // 全新14个深度内容库
+    const keterThreats=["SCP-106 (腐化老者) - 现实扭曲","SCP-939 (声之群) - 基金会多次用于对抗混沌外围","SCP-457 (地狱火) - 曾被混沌考虑作为武器"];
+    const thaumielAssets=["SCP-3000 (阿难陀舍沙) - 记忆删除来源，混沌无访问权限","SCP-2000 (机械降神) - 文明重启装置，混沌高层紧盯"];
+    const siteLocations=["Site-19 (最大站点) - 混沌长期渗透目标","Area-51 (军方关联) - 异常技术储藏地","Site-13 (潘多拉之门) - 混沌严禁接近"];
+    const keyPersonnel=["O5-7 (身份不明) - 据信与混沌有隐秘通信","Dr. Clef (传奇研究员) - 混沌击杀名单前列","Dr. Bright (不死者) - 混沌情报网持续监控"];
+    const chaosRituals=["熵之钟鸣奏礼 (5K核心仪式)","赫尔墨斯附魔 (武器升华仪式)","混沌血盟 (特工忠诚契约)"];
+    const chaosInfra=["德尔塔总部 (地下8层)","赫尔墨斯工坊 (异常改造车间)","熵之钟祭坛 (地下圣所)"];
+    const frontReports=["北非战线: 混沌击退基金会前哨","南美丛林战: GOC遭遇伏击","东亚情报战: 双方渗透激烈"];
+    const ancientArtifacts=["所罗门之钥 (神话级异常)","仙丹 (长生不老药残片)","混沌方碑 (前文明造物)"];
+    const cognitohazards=["SCP-012 (未完乐章)","SCP-033 (缺失数字)","混沌护符 (对抗认知污染)"];
+    const realityBending=["SCP-239 (巫女) - 现实扭曲者，混沌试图招募","SCP-3812 (超越叙事) - 绝对危险，不可接触"];
+    const pataphysics=["叙事层武器假说","混沌分裂者可能已接触上层叙事","第五维情报战"];
+    const ethicsCommittee=["O5-10 伦理委员会主席","混沌对伦理委员会无直接接触","曾试图渗透未果"];
+    const serpentsHand=["蛇之手·绿之章 (中立派)","蛇之手·尖牙 (与混沌冲突)","共享异常自由理念但路线不同"];
+    const gocWeaponList=["奇术师战术小队","天使无人机系统","物理摧毁协议 (对异常)"];
+
+    // 绑定扩展按钮 (共31个)
+    document.getElementById('scpBtn').onclick=()=>showModal("SCP档案", new Promise(r=>setTimeout(()=>{ let h=""; scpList.forEach(s=>{ h+=`<div><strong class="green-text">${s.name}</strong><br><span class="red-text">${s.desc}</span></div><hr>`; }); r(h); },450)));
+    document.getElementById('eventBtn').onclick=()=>showModal("突发事件", new Promise(r=>setTimeout(()=>{ r(`<div class="red-text">⚠️ ${eventPool[Math.random()*eventPool.length|0]}</div>`); },400)));
+    document.getElementById('adminBtn').onclick=()=>showModal("管理核心", new Promise(r=>setTimeout(()=>{ let h=""; adminData.forEach(a=>{ h+=`<div><span class="${a.authorized?'green-text':'red-text'}">${a.name}</span> - ${a.role}</div>`; }); h+=`<div class="red-text">⚠️ 部分人员未得到德尔塔工程师授权公开</div>`; r(h); },500)));
+    document.getElementById('partnerBtn').onclick=()=>showModal("合作势力", new Promise(r=>setTimeout(()=>{ let h=""; partners.forEach(p=>{ h+=`<div><strong class="green-text">${p.name}</strong><br>${p.desc}</div><hr>`; }); r(h); },480)));
+    document.getElementById('rivalBtn').onclick=()=>showModal("敌对名单", new Promise(r=>setTimeout(()=>{ let h=""; rivals.forEach(rv=>{ h+=`<div><strong class="red-text">${rv.name}</strong><br>${rv.desc}</div><hr>`; }); r(h); },470)));
+    document.getElementById('weaponBtn').onclick=()=>showModal("武器库", new Promise(r=>setTimeout(()=>{ let h=""; weapons.forEach(w=>{ h+=`<div><strong class="green-text">${w.name}</strong><br>${w.desc}</div>`; }); r(h); },490)));
+    document.getElementById('warReportBtn').onclick=()=>showModal("5K战报", new Promise(r=>setTimeout(()=>{ r(`<div class="green-text">${warReports[Math.random()*warReports.length|0]}</div>`); },430)));
+    document.getElementById('wantedBtn').onclick=()=>showModal("悬赏", new Promise(r=>setTimeout(()=>{ let h=""; wantedData.forEach(w=>{ h+=`<div class="red-text">${w}</div>`; }); r(h); },410)));
+    document.getElementById('marketBriefBtn').onclick=()=>showModal("暗网交易", new Promise(r=>setTimeout(()=>{ let h=""; marketUpdates.forEach(m=>{ h+=`<div class="green-text">${m}</div>`; }); r(h); },420)));
+    document.getElementById('foundationRespBtn').onclick=()=>showModal("基金会回应", new Promise(r=>setTimeout(()=>{ r(`<div class="red-text">${foundationResponses[Math.random()*foundationResponses.length|0]}</div>`); },440)));
+    document.getElementById('prophecyBtn').onclick=()=>showModal("熵之预言", new Promise(r=>setTimeout(()=>{ r(`<div class="green-text">🔮 ${prophecies[Math.random()*prophecies.length|0]}</div>`); },460)));
+    document.getElementById('defectorBtn').onclick=()=>showModal("叛逃者", new Promise(r=>setTimeout(()=>{ let h=""; defectors.forEach(d=>{ h+=`<div class="red-text">${d}</div>`; }); r(h); },400)));
+    document.getElementById('scpItemsBtn').onclick=()=>showModal("异常细目", new Promise(r=>setTimeout(()=>{ let h=""; scpItemsDetail.forEach(i=>{ h+=`<div><strong>${i.name}</strong><br>${i.desc}</div><hr>`; }); r(h); },510)));
+    document.getElementById('goiBtn').onclick=()=>showModal("相关组织", new Promise(r=>setTimeout(()=>{ let h=""; goiList.forEach(g=>{ h+=`<div>${g.name} - ${g.rel}</div>`; }); r(h); },500)));
+    document.getElementById('mtfBtn').onclick=()=>showModal("MTF威胁", new Promise(r=>setTimeout(()=>{ let h=""; mtfThreats.forEach(m=>{ h+=`<div><strong class="red-text">${m.name}</strong><br>${m.desc}</div><hr>`; }); r(h); },520)));
+    document.getElementById('apollyonBtn').onclick=()=>showModal("Apollyon级", new Promise(r=>setTimeout(()=>{ let h=""; apollyonThreats.forEach(a=>{ h+=`<div><strong class="red-text">${a.name}</strong><br>${a.desc}</div><hr>`; }); r(h); },530)));
+    document.getElementById('scpTaleBtn').onclick=()=>showModal("分裂者传说", new Promise(r=>setTimeout(()=>{ let h=""; scpTales.forEach(t=>{ h+=`<div><strong class="green-text">${t.title}</strong><br>${t.desc}</div><hr>`; }); r(h); },540)));
+    document.getElementById('arkhamBtn').onclick=()=>showModal("阿卡姆协议", new Promise(r=>setTimeout(()=>{ let h=""; arkhamProtocol.forEach(a=>{ h+=`<div><strong class="green-text">${a.name}</strong><br>${a.desc}</div>`; }); r(h); },550)));
+
+    // 新增14个
+    document.getElementById('keterBtn').onclick=()=>showModal("⚡ Keter威胁", new Promise(r=>setTimeout(()=>{ let h=""; keterThreats.forEach(k=>{ h+=`<div class="red-text">${k}</div><hr>`; }); r(h); },480)));
+    document.getElementById('thaumielBtn').onclick=()=>showModal("🛡️ Thaumiel资产", new Promise(r=>setTimeout(()=>{ let h=""; thaumielAssets.forEach(t=>{ h+=`<div class="green-text">${t}</div><hr>`; }); r(h); },490)));
+    document.getElementById('siteLocBtn').onclick=()=>showModal("🏚️ 基金会站点", new Promise(r=>setTimeout(()=>{ let h=""; siteLocations.forEach(s=>{ h+=`<div class="red-text">${s}</div><hr>`; }); r(h); },470)));
+    document.getElementById('personnelBtn').onclick=()=>showModal("👤 关键人物", new Promise(r=>setTimeout(()=>{ let h=""; keyPersonnel.forEach(p=>{ h+=`<div>${p}</div><hr>`; }); r(h); },500)));
+    document.getElementById('ritualBtn').onclick=()=>showModal("🕯️ 混沌仪式", new Promise(r=>setTimeout(()=>{ let h=""; chaosRituals.forEach(r=>{ h+=`<div class="green-text">${r}</div><hr>`; }); r(h); },510)));
+    document.getElementById('infrastructureBtn').onclick=()=>showModal("🏭 混沌基建", new Promise(r=>setTimeout(()=>{ let h=""; chaosInfra.forEach(i=>{ h+=`<div class="green-text">${i}</div><hr>`; }); r(h); },490)));
+    document.getElementById('frontBtn').onclick=()=>showModal("🌲 前线战报", new Promise(r=>setTimeout(()=>{ let h=""; frontReports.forEach(f=>{ h+=`<div class="red-text">${f}</div><hr>`; }); r(h); },480)));
+    document.getElementById('artifactBtn').onclick=()=>showModal("🏺 古代异常", new Promise(r=>setTimeout(()=>{ let h=""; ancientArtifacts.forEach(a=>{ h+=`<div class="green-text">${a}</div><hr>`; }); r(h); },520)));
+    document.getElementById('cognitohazardBtn').onclick=()=>showModal("🧠 认知危害", new Promise(r=>setTimeout(()=>{ let h=""; cognitohazards.forEach(c=>{ h+=`<div class="red-text">${c}</div><hr>`; }); r(h); },500)));
+    document.getElementById('realityBendingBtn').onclick=()=>showModal("🌀 现实扭曲", new Promise(r=>setTimeout(()=>{ let h=""; realityBending.forEach(r=>{ h+=`<div class="red-text">${r}</div><hr>`; }); r(h); },530)));
+    document.getElementById('pataphysicsBtn').onclick=()=>showModal("📚 超形上学", new Promise(r=>setTimeout(()=>{ let h=""; pataphysics.forEach(p=>{ h+=`<div class="green-text">${p}</div><hr>`; }); r(h); },540)));
+    document.getElementById('ethicsBtn').onclick=()=>showModal("⚖️ 伦理委员会", new Promise(r=>setTimeout(()=>{ let h=""; ethicsCommittee.forEach(e=>{ h+=`<div class="red-text">${e}</div><hr>`; }); r(h); },470)));
+    document.getElementById('serpentsHandBtn').onclick=()=>showModal("🐍 蛇之手档案", new Promise(r=>setTimeout(()=>{ let h=""; serpentsHand.forEach(s=>{ h+=`<div>${s}</div><hr>`; }); r(h); },490)));
+    document.getElementById('gocWeaponBtn').onclick=()=>showModal("💣 GOC武器清单", new Promise(r=>setTimeout(()=>{ let h=""; gocWeaponList.forEach(g=>{ h+=`<div class="red-text">${g}</div><hr>`; }); r(h); },500)));
+
+    // 复制功能
+    async function copyText(t,id,m){ try{ await navigator.clipboard.writeText(t); let el=document.getElementById(id); if(el){ el.innerText=m; setTimeout(()=>el.innerText='',1500); } }catch(e){} }
+    document.querySelectorAll('.copy-btn').forEach(btn=>{ btn.onclick=()=>{ let num=btn.getAttribute('data-clip'), tid=btn.getAttribute('data-toast'); if(num&&tid) copyText(num,tid,"✓"); }; });
+    document.getElementById('copyEngQQ').onclick=()=>copyText('3583269942','toastEngineer','QQ已复制');
+</script>
+</body>
+</html>
